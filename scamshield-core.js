@@ -633,20 +633,25 @@ function runDemo() {
   console.log("✅ Demo complete!");
 }
 
-// Main execution
-const args = process.argv.slice(2);
-if (args[0] === "--interactive" || args[0] === "-i") {
-  runInteractive();
-} else if (args[0]) {
-  // Assume it's a file path
-  if (fs.existsSync(args[0])) {
-    const content = fs.readFileSync(args[0], "utf-8");
-    const verdict = analyzeMessage(content);
-    console.log("SCAMSHIELD VERDICT:\n");
-    console.log(verdict);
+// Main execution - only run CLI if this file is run directly
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  if (args[0] === "--interactive" || args[0] === "-i") {
+    runInteractive();
+  } else if (args[0]) {
+    // Assume it's a file path
+    if (fs.existsSync(args[0])) {
+      const content = fs.readFileSync(args[0], "utf-8");
+      const verdict = analyzeMessage(content);
+      console.log("SCAMSHIELD VERDICT:\n");
+      console.log(verdict);
+    } else {
+      console.error(`File not found: ${args[0]}`);
+    }
   } else {
-    console.error(`File not found: ${args[0]}`);
+    runDemo();
   }
-} else {
-  runDemo();
 }
+
+// Export for use as module (for server.js)
+module.exports = { analyzeMessage };

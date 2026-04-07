@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ScamShield - Scam Detection Agent</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .input-section {
+      margin-bottom: 20px;
+    }
+    
+    .input-section label {
+      display: block;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .input-section textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.3s;
+    }
+    
+    .input-section textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-analyze {
+      background: #667eea;
+      color: white;
+      flex: 1;
+    }
+    
+    .btn-analyze:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-demo {
+      background: #764ba2;
+      color: white;
+      padding: 12px 20px;
+    }
+    
+    .btn-demo:hover {
+      background: #65408a;
+      transform: translateY(-2px);
+    }
+    
+    .btn-clear {
+      background: #f5f5f5;
+      color: #333;
+      padding: 12px 20px;
+    }
+    
+    .btn-clear:hover {
+      background: #e0e0e0;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      color: #667eea;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .verdict-section {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .verdict-text {
+      background: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .demo-card {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    
+    .demo-card:hover {
+      background: #e8e8e8;
+      border-color: #667eea;
+      transform: translateY(-2px);
+    }
+    
+    .demo-card h4 {
+      margin-bottom: 8px;
+      color: #667eea;
+    }
+    
+    .demo-card p {
+      font-size: 0.85em;
+      color: #666;
+      line-height: 1.4;
+    }
+    
+    .error {
+      background: #fee;
+      border-left: 4px solid #f44;
+      padding: 15px;
+      border-radius: 8px;
+      color: #933;
+      margin-top: 10px;
+      display: none;
+    }
+    
+    .success {
+      background: #efe;
+      border-left: 4px solid #4a4;
+      padding: 15px;
+      border-radius: 8px;
+      color: #393;
+      margin-top: 10px;
+      display: none;
+    }
+    
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 20px;
+    }
+    
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .tab-btn.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ ScamShield</h1>
+      <p>Open Innovation Scam Detection Agent</p>
+      <p style="font-size: 0.9em; opacity: 0.8;">Custom-built detection engine • No external APIs • Works offline</p>
+    </div>
+    
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('analyze')">Analyze</button>
+        <button class="tab-btn" onclick="switchTab('demo')">Demo Examples</button>
+      </div>
+      
+      <!-- ANALYZE TAB -->
+      <div id="analyze" class="tab-content active">
+        <div class="input-section">
+          <label for="message">Enter suspicious message or content:</label>
+          <textarea id="message" placeholder="Paste your SMS, email, or any text you want to check for scam signs..."></textarea>
+        </div>
+        
+        <div class="button-group">
+          <button class="btn-analyze" onclick="analyzeMessage()">🔍 Analyze</button>
+          <button class="btn-clear" onclick="clearForm()">Clear</button>
+        </div>
+        
+        <div class="error" id="error"></div>
+        <div class="success" id="success"></div>
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Analyzing message...</p>
+        </div>
+      </div>
+      
+      <!-- DEMO TAB -->
+      <div id="demo" class="tab-content">
+        <p style="margin-bottom: 15px; color: #666;">Click on any example to analyze:</p>
+        <div class="demos-grid" id="demosGrid">
+          <div class="demo-card">
+            <h4>Loading...</h4>
+            <p>Fetching demo examples...</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- VERDICT SECTION -->
+      <div class="verdict-section" id="verdictSection">
+        <h3 style="margin-bottom: 15px; color: #333;">📊 Analysis Result:</h3>
+        <div class="verdict-text" id="verdictText"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Switch between tabs
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+      
+      if (tabName === 'demo') {
+        loadDemos();
+      }
+    }
+    
+    // Load demo examples
+    async function loadDemos() {
+      try {
+        const response = await fetch('/api/demo');
+        const data = await response.json();
+        
+        const grid = document.getElementById('demosGrid');
+        grid.innerHTML = '';
+        
+        data.demos.forEach(demo => {
+          const card = document.createElement('div');
+          card.className = 'demo-card';
+          card.innerHTML = `
+            <h4>${demo.file}</h4>
+            <p>${demo.message}</p>
+          `;
+          card.onclick = () => showDemoVerdic!t(demo);
+          grid.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Failed to load demos:', error);
+      }
+    }
+    
+    // Show demo verdict
+    function showDemoVerdict(demo) {
+      document.getElementById('verdictText').textContent = demo.verdict;
+      document.getElementById('verdictSection').style.display = 'block';
+      document.getElementById('verdictSection').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Analyze message
+    async function analyzeMessage() {
+      const message = document.getElementById('message').value.trim();
+      
+      if (!message) {
+        showError('Please enter a message to analyze');
+        return;
+      }
+      
+      clearMessages();
+      showLoading(true);
+      
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Analysis failed');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          document.getElementById('verdictText').textContent = data.verdict;
+          document.getElementById('verdictSection').style.display = 'block';
+          showSuccess('Analysis complete!');
+          document.getElementById('verdictSection').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          showError(data.error || 'Unknown error');
+        }
+      } catch (error) {
+        showError('Error: ' + error.message);
+      } finally {
+        showLoading(false);
+      }
+    }
+    
+    // Utility functions
+    function showLoading(show) {
+      document.getElementById('loading').style.display = show ? 'block' : 'none';
+    }
+    
+    function showError(msg) {
+      const el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+    
+    function showSuccess(msg) {
+      const el = document.getElementById('success');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => el.style.display = 'none', 3000);
+    }
+    
+    function clearMessages() {
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('success').style.display = 'none';
+    }
+    
+    function clearForm() {
+      document.getElementById('message').value = '';
+      document.getElementById('verdictSection').style.display = 'none';
+      clearMessages();
+    }
+    
+    // Auto-load demos when page loads
+    window.addEventListener('load', () => {
+      // Optionally preload demos
+    });
+  </script>
+</body>
+</html>

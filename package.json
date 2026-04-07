@@ -1,5 +1,18 @@
 {
+  "name": "scamshield-agent",
+  "version": "1.0.0",
+  "description": "Open Innovation Scam Detection Agent",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "cli": "node scamshield-core.js",
+    "cli:interactive": "node scamshield-core.js -i",
+    "cli:demo": "node scamshield-core.js",
+    "test": "node scamshield-core.js"
+  },
   "dependencies": {
-    "@open-gitagent/gitagent": "^0.2.0"
+    "@anthropic-ai/sdk": "^0.82.0",
+    "@open-gitagent/gitagent": "^0.2.0",
+    "express": "^4.22.1"
   }
 }

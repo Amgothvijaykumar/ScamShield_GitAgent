@@ -9,6 +9,25 @@
 
 ---
 
+## 🚀 Quick Start (30 seconds)
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start the web server
+npm start
+
+# 3. Open browser
+# http://localhost:3000
+
+# ✅ Done! Start analyzing messages!
+```
+
+**Want detailed setup instructions?** → Read [SETUP.md](./SETUP.md)
+
+---
+
 ## 🎯 What is ScamShield?
 
 ScamShield is an AI agent that analyzes suspicious SMS messages, emails, links, and text content to detect scams in real-time. Paste any message you're unsure about, and ScamShield will tell you:

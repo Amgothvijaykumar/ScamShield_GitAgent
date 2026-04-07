@@ -344,18 +344,6 @@ CONFIDENCE: low (standard commercial message)
 
 ---
 
-## 🏆 Challenge Submission Details
-
-**Hackathon:** GitAgent Open Innovation 2025  
-**Standard:** gitagent v0.1.0  
-**Category:** AI Agent for Consumer Protection  
-**Focus:** India-specific scam detection  
-
-**Submission Branch:** `gitclaw-testing`  
-**Status:** ✅ Ready for Judges
-
----
-
 ## ⚡ Quick Commands Reference
 
 ```bash
@@ -377,36 +365,6 @@ npm run cli:demo                    # Offline (no API key)
 export ANTHROPIC_API_KEY=...
 npx gitclaw start --agent . --interactive  # With API key
 ```
-
----
-
-## 📝 What to Show Judges
-
-1. **Instant Demo (30 seconds)**
-   ```bash
-   npm run cli:demo
-   ```
-   Show: 4 test cases passing with 100% detection
-
-2. **Interactive Test (2 minutes)**
-   ```bash
-   npm run cli:interactive
-   ```
-   Paste: Any suspicious message  
-   Show: Instant verdict with evidence
-
-3. **Validation (1 minute)**
-   ```bash
-   npx gitagent validate
-   npx gitagent info
-   ```
-   Show: 0 warnings, all components valid
-
-4. **Agent Framework (optional, with API key)**
-   ```bash
-   npx gitclaw start --agent . --interactive
-   ```
-   Show: Full agent capabilities
 
 ---
 
@@ -442,7 +400,7 @@ Weighted signal aggregation instead of simple rules → Sophisticated threat cla
 
 ## 📄 License
 
-MIT License — You're free to use, modify, and distribute this agent.
+MIT
 
 ---
 

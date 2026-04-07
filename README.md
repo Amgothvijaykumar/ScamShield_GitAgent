@@ -32,6 +32,7 @@ npm install gitclaw
 export ANTHROPIC_API_KEY=your_key_here
 npx gitclaw start --agent . --interactive
 ```
+**Note:** With gitclaw + API key, the agent gains **conversation memory** — it remembers previous messages, can reference earlier scams analyzed, and provides better contextual understanding. Memory is automatically managed by gitclaw. ✅
 
 ---
 

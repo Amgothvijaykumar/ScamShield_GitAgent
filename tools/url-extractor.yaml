@@ -1,0 +1,38 @@
+name: url-extractor
+description: "Extracts, validates, and analyzes URLs from text content. Identifies suspicious domains, URL shorteners, and typosquatting patterns common in phishing scams."
+
+input_schema:
+  type: object
+  properties:
+    text:
+      type: string
+      description: "Raw text content to extract URLs from"
+  required:
+    - text
+
+output_schema:
+  type: object
+  properties:
+    urls:
+      type: array
+      items:
+        type: object
+        properties:
+          original:
+            type: string
+          normalized:
+            type: string
+          domain:
+            type: string
+          tld:
+            type: string
+          is_shortener:
+            type: boolean
+          is_suspicious:
+            type: boolean
+          risk_indicators:
+            type: array
+            items:
+              type: string
+    count:
+      type: integer

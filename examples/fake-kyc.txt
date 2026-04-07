@@ -1,0 +1,27 @@
+Dear Customer,
+
+Your SBI account has been flagged for suspicious activity. Your account will be blocked in 24 hours if you do not verify immediately.
+
+Click the link below to verify your KYC details:
+https://sbi-kyc-verification-alert.online
+
+You will need to enter:
+- Your 10-digit account number
+- Your OTP
+- Your Aadhaar number
+- Your CVV and expiry date
+
+Act Now: https://bit.ly/sbi-kyc-verify
+
+State Bank of India Customer Support
+Call: 0120-2223322 or 9087654321
+
+---
+
+Note: This is a HIGH-RISK PHISHING SCAM. Red flags:
+1. SBI never asks for OTP, Aadhaar, or CVV via links
+2. Fake domain (sbi-kyc-verification-alert.online ≠ sbi.co.in)
+3. URL shortener (bit.ly) used to hide destination
+4. Account blocking threat creates urgency
+5. Requests multiple sensitive credentials
+6. Spoofed contact numbers

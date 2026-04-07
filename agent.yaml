@@ -1,0 +1,43 @@
+spec_version: "0.1.0"
+name: scamshield-agent
+version: 1.0.0
+description: "Analyzes suspicious SMS, emails, and links to detect scams with a risk score and plain-language explanation"
+author: "Amgoth Vijay Kumar"
+license: MIT
+
+model:
+  preferred: claude-sonnet-4-5-20250929
+  fallback:
+    - gpt-4o
+    - gemini-1.5-pro
+  constraints:
+    temperature: 0.1
+    max_tokens: 4096
+
+skills:
+  - parse-input
+  - analyze-signals
+  - classify-threat
+  - explain-verdict
+
+tools:
+  - url-extractor
+
+runtime:
+  max_turns: 20
+  timeout: 60
+
+tags:
+  - security
+  - safety
+  - scam-detection
+  - india
+  - open-innovation
+  - hackathon
+  - upi-fraud
+  - consumer-protection
+
+metadata:
+  region: "India"
+  hackathon: "GitAgent Open Innovation Hackathon 2025"
+  demo_input: "examples/upi-lottery.txt"

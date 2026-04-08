@@ -144,14 +144,14 @@ npx gitagent validate
 npx gitagent info
 
 # 4. Start interactive analysis (with gitclaw runtime)
-npx gitclaw start --agent . --interactive
+npx gitclaw
 ```
 
-Then paste any suspicious message at the prompt:
+Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory:
 
 ```
-ScamShield > paste your suspicious message or hit Enter to use examples:
-> Hey! Congratulations! You won ₹5,00,000!...
+→ Hey! Congratulations! You won ₹5,00,000!...
+→ /quit
 ```
 
 ### Option B: Deploy Serverlessly with clawless
@@ -341,7 +341,7 @@ This submission addresses all four hackathon judging criteria:
 - **Taxonomy-Based**: analyze-signals uses a scientific signal catalog with weighted evidence
 
 ### 3. **Working Demo** (25%)
-- **Local Setup**: Works out-of-box with gitclaw (`npm install && npx gitclaw start`)
+- **Local Setup**: Works out-of-box with gitclaw (`npm install && npx gitclaw`)
 - **Example Cases**: 4 test files covering HIGH/MEDIUM/SAFE verdicts
 - **Real Content**: Examples use actual scam SMS patterns observed in India
 - **Reproducible**: Same input → same verdict every run

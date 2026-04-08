@@ -37,13 +37,6 @@ npx gitclaw
 ```
 Use this only if you want the full GitClaw runtime with memory and model-backed chat. The offline demo remains the recommended judge flow.
 
-### Option 3: Browser Demo / Serverless
-```bash
-npm start
-```
-
-**Want detailed setup instructions?** → Read [SETUP.md](./SETUP.md)
-
 ---
 
 ## 🎯 What is ScamShield?
@@ -152,16 +145,19 @@ npx gitagent --help
 ### Option A: Run Locally with gitclaw
 
 ```bash
-# 1. Install gitclaw SDK
+# 1. Install project dependencies
+npm install
+
+# 2. Install gitclaw SDK
 npm install gitclaw
 
-# 2. Validate agent structure
+# 3. Validate agent structure
 npx gitagent validate
 
-# 3. View agent summary
+# 4. View agent summary
 npx gitagent info
 
-# 4. Run GitClaw with an Anthropic key
+# 5. Run GitClaw with an Anthropic key
 
 **macOS / Linux**
 ```bash
@@ -422,6 +418,7 @@ MIT License — See [LICENSE](LICENSE) file for details.
 - **gitagent Standard:** https://github.com/open-gitagent/gitagent
 - **gitclaw SDK:** https://github.com/open-gitagent/gitclaw
 - **clawless Runtime:** https://github.com/open-gitagent/clawless
+- **Demo Video:** https://youtu.be/wqZStzpkgJ8
 
 ---
 
@@ -437,7 +434,7 @@ MIT License — See [LICENSE](LICENSE) file for details.
 - [x] 4 example test cases
 - [x] README.md with local setup & demo instructions
 - [x] Works with gitclaw (local) and clawless (serverless)
-- [ ] Demo video link — add your uploaded video URL here
+- [x] Demo video link: https://youtu.be/wqZStzpkgJ8
 - [ ] Public GitHub repo — to be initialized & pushed
 
 ---

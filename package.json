@@ -9,7 +9,7 @@
     "cli:interactive": "node scamshield-core.js -i",
     "cli:demo": "node scamshield-core.js",
     "gitclaw:ask": "node gitclaw-ask.mjs",
-    "gitclaw:xai": "bash start-gitclaw-xai.sh",
+    "gitclaw:groq": "bash start-gitclaw-groq.sh",
     "test": "node scamshield-core.js"
   },
   "dependencies": {

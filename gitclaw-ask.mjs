@@ -9,17 +9,18 @@ if (!prompt) {
   process.exit(1);
 }
 
-const model = 'xai:grok-4';
+const model = 'groq:llama-3.3-70b-versatile';
 
-const xaiApiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+const groqApiKey = process.env.GROQ_API_KEY || process.env.XAI_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 
-if (!xaiApiKey) {
-  console.error('Error: XAI_API_KEY environment variable is not set.');
-  console.error('Set it with: export XAI_API_KEY=your-key-here');
+if (!groqApiKey) {
+  console.error('Error: GROQ_API_KEY environment variable is not set.');
+  console.error('Set it with: export GROQ_API_KEY=your-key-here');
   process.exit(1);
 }
 
-process.env.XAI_API_KEY = xaiApiKey;
+process.env.GROQ_API_KEY = groqApiKey;
+delete process.env.XAI_API_KEY;
 delete process.env.GROK_API_KEY;
 delete process.env.GEMINI_API_KEY;
 delete process.env.GOOGLE_API_KEY;

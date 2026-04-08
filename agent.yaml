@@ -6,7 +6,7 @@ author: "Amgoth Vijay Kumar"
 license: MIT
 
 model:
-  preferred: xai:grok-4
+  preferred: anthropic:claude-sonnet-4-5-20250929
   fallback:
     - google:gemini-2.0-flash
     - openai:gpt-4o

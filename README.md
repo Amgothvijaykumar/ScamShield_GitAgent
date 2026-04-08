@@ -9,19 +9,37 @@
 
 ---
 
-## 🚀 Quick Start (30 seconds)
+## 🚀 Quick Start
 
+### Option 1: Offline Demo First
 ```bash
-# 1. Install dependencies
 npm install
+npm run cli:demo
+```
+This is the fastest judge-friendly demo: no API key, no browser, no setup drift.
 
-# 2. Start the web server
+### Option 1b: Offline Terminal Interaction
+```bash
+npm run cli:interactive
+```
+Paste a suspicious message directly in the terminal and get an instant verdict.
+
+### Option 2: Full GitClaw Agent with Anthropic
+**macOS / Linux**
+```bash
+export ANTHROPIC_API_KEY=your_key_here
+npx gitclaw
+```
+**Windows PowerShell**
+```powershell
+$env:ANTHROPIC_API_KEY="your_key_here"
+npx gitclaw
+```
+Use this only if you want the full GitClaw runtime with memory and model-backed chat. The offline demo remains the recommended judge flow.
+
+### Option 3: Browser Demo / Serverless
+```bash
 npm start
-
-# 3. Open browser
-# http://localhost:3000
-
-# ✅ Done! Start analyzing messages!
 ```
 
 **Want detailed setup instructions?** → Read [SETUP.md](./SETUP.md)
@@ -143,14 +161,27 @@ npx gitagent validate
 # 3. View agent summary
 npx gitagent info
 
-# 4. Run GitClaw with a GroqCloud key (the helper maps `GROQ_API_KEY` for the CLI)
-npm run gitclaw:groq
+# 4. Run GitClaw with an Anthropic key
 
-# Or start the interactive REPL
+**macOS / Linux**
+```bash
+export ANTHROPIC_API_KEY=your_key_here
 npx gitclaw
 ```
 
-Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. For this GitClaw path, set `GROQ_API_KEY` and use the helper so it exports `GROQ_API_KEY` for the CLI.
+**Windows PowerShell**
+```powershell
+$env:ANTHROPIC_API_KEY="your_key_here"
+npx gitclaw
+```
+
+**Windows Command Prompt**
+```cmd
+set ANTHROPIC_API_KEY=your_key_here
+npx gitclaw
+```
+
+Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. For this GitClaw path, set `ANTHROPIC_API_KEY` in the same terminal.
 
 ```
 → Hey! Congratulations! You won ₹5,00,000!...
@@ -327,34 +358,6 @@ Edit [RULES.md](RULES.md) to change:
 
 ---
 
-## 📊 Judging Criteria Coverage
-
-This submission addresses all four hackathon judging criteria:
-
-### 1. **Agent Quality** (30%)
-- **SOUL.md**: Distinctive personality, India-focused expertise, protective values
-- **RULES.md**: 20+ hard constraints, no hallucinations, privacy-first
-- **Chain of Reasoning**: Transparent four-stage pipeline with auditable decision logic
-- **Scope Focus**: Strictly scam detection — not a general-purpose assistant
-
-### 2. **Skill Design** (25%)
-- **Four Focused Skills**: Each skill has one clear responsibility (parse → analyze → classify → explain)
-- **Well-Documented**: Detailed SKILL.md for each with examples and edge cases
-- **Practical**: Each skill produces JSON output that feeds into the next (clean handoff)
-- **Taxonomy-Based**: analyze-signals uses a scientific signal catalog with weighted evidence
-
-### 3. **Working Demo** (25%)
-- **Local Setup**: Works out-of-box with gitclaw (`npm install && npx gitclaw`)
-- **Example Cases**: 4 test files covering HIGH/MEDIUM/SAFE verdicts
-- **Real Content**: Examples use actual scam SMS patterns observed in India
-- **Reproducible**: Same input → same verdict every run
-
-### 4. **Creativity** (20%)
-- **India Focus**: Designed specifically for Indian fraud landscape (UPI, NPCI, KYC, TRAI)
-- **User Empathy**: Protective tone that never blames victims, even if they clicked
-- **Plain Language**: Explains "phishing" and "OTP" to non-technical users
-- **Serverless Option**: Provides both local (gitclaw) and zero-infrastructure (clawless) deployment paths
-
 ---
 
 ## 🔐 Safety & Privacy Principles
@@ -379,12 +382,6 @@ This submission addresses all four hackathon judging criteria:
 | **Fallback LLMs** | GPT-4o, Gemini 1.5 Pro |
 | **Language** | Markdown (skills) + YAML (agent, tools) |
 | **Hosting** | GitHub (source), Vercel/Netlify (clawless) |
-
----
-
-## 📱 Demo Video
-
-See [DEMO.md](DEMO.md) for step-by-step demo setup and recording instructions (2–5 min video).
 
 ---
 
@@ -440,10 +437,10 @@ MIT License — See [LICENSE](LICENSE) file for details.
 - [x] 4 example test cases
 - [x] README.md with local setup & demo instructions
 - [x] Works with gitclaw (local) and clawless (serverless)
-- [ ] Demo video (2–5 min) — to be recorded & uploaded
+- [ ] Demo video link — add your uploaded video URL here
 - [ ] Public GitHub repo — to be initialized & pushed
 
 ---
 
 **Last Updated:** 7 April 2026  
-**Status:** Ready for hackathon submission (pending GitHub push & demo video)
+**Status:** Ready for hackathon submission (pending GitHub push)

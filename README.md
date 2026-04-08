@@ -10,45 +10,27 @@
 
 ## 🚀 Quick Start (Choose Your Method)
 
-### Option 1: Full GitClaw Agent (PRIMARY - With Conversation Memory) ⭐
-**Best for judges** — Full agent experience with conversation memory and API integration.
-
+### Option 1: Offline Demo (30 seconds, NO API KEY NEEDED)
 ```bash
 git clone https://github.com/Amgothvijaykumar/ScamShield_GitAgent.git
 cd ScamShield_GitAgent
 npm install
-
-# Set your Anthropic API key
-export ANTHROPIC_API_KEY=your_key_here
-
-# Start the agent with full capabilities
-./start-gitclaw.sh
-```
-
-**Or directly:**
-```bash
-npx gitclaw start --agent . --interactive
-```
-
-**What you get:**
-- ✅ Conversation memory (agent remembers previous messages)
-- ✅ Multi-turn context (better understanding across messages)
-- ✅ Full gitclaw framework
-- ✅ Type messages naturally, see instant verdicts
-
-### Option 2: Offline Demo (30 seconds, NO API KEY NEEDED)
-```bash
 npm run cli:demo
 ```
 **Result:** See 4 test cases analyzed instantly (UPI scam, KYC phishing, job fraud, legitimate).
 
-### Option 3: Interactive Mode (Type Your Own Messages, No API Key)
+### Option 2: Interactive Mode (Type Your Own Messages)
 ```bash
 npm run cli:interactive
 # Paste any suspicious message → Get instant verdict
 ```
 
-**For detailed gitclaw setup and conversation memory features,** see [GITCLAW_GUIDE.md](GITCLAW_GUIDE.md).
+### Option 3: Full gitclaw Agent (With Anthropic API Key)
+```bash
+export ANTHROPIC_API_KEY=your_key_here
+npx gitclaw start --agent . --interactive
+```
+**Note:** With gitclaw + API key, the agent gains **conversation memory** — it remembers previous messages, can reference earlier scams analyzed, and provides better contextual understanding. Memory is automatically managed by gitclaw. ✅
 
 ---
 
@@ -291,7 +273,6 @@ This agent runs on:
 ## 📖 Learn More
 
 **Core Files to Review:**
-- `GITCLAW_GUIDE.md` — Complete guide to running with conversation memory
 - `SOUL.md` — Detailed agent identity and values
 - `RULES.md` — Complete behavioral constraints
 - `skills/` — Each stage of the detection pipeline

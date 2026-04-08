@@ -143,14 +143,14 @@ npx gitagent validate
 # 3. View agent summary
 npx gitagent info
 
-# 4. Run a GitClaw-only prompt (requires a valid Google API key)
+# 4. Run a GitClaw-only prompt (requires a valid Gemini API key)
 npm run gitclaw:ask -- "Hey! Congratulations! You won ₹5,00,000!..."
 
 # Or start the interactive REPL
 npx gitclaw
 ```
 
-Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. The direct GitClaw commands only work with a real Google API key (`GOOGLE_API_KEY`):
+Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. The direct GitClaw commands only work with a real Gemini API key (`GEMINI_API_KEY`). `GOOGLE_API_KEY` is accepted by the wrapper as an alias.
 
 ```
 → Hey! Congratulations! You won ₹5,00,000!...

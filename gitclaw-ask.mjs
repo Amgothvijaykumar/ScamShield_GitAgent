@@ -11,11 +11,16 @@ if (!prompt) {
 
 const model = 'google:gemini-2.0-flash';
 
-if (!process.env.GOOGLE_API_KEY) {
-  console.error('Error: GOOGLE_API_KEY environment variable is not set.');
-  console.error('Set it with: export GOOGLE_API_KEY=your-key-here');
+const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+
+if (!geminiApiKey) {
+  console.error('Error: GEMINI_API_KEY environment variable is not set.');
+  console.error('Set it with: export GEMINI_API_KEY=your-key-here');
   process.exit(1);
 }
+
+process.env.GEMINI_API_KEY = geminiApiKey;
+process.env.GOOGLE_API_KEY = geminiApiKey;
 
 try {
   for await (const msg of query({

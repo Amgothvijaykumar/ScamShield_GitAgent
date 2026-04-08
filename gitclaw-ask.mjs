@@ -20,7 +20,7 @@ if (!geminiApiKey) {
 }
 
 process.env.GEMINI_API_KEY = geminiApiKey;
-process.env.GOOGLE_API_KEY = geminiApiKey;
+delete process.env.GOOGLE_API_KEY;
 
 try {
   for await (const msg of query({

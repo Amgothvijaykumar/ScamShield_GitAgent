@@ -150,7 +150,7 @@ npm run gitclaw:ask -- "Hey! Congratulations! You won ₹5,00,000!..."
 npx gitclaw
 ```
 
-Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. The direct GitClaw commands only work with a real Gemini API key (`GEMINI_API_KEY`). `GOOGLE_API_KEY` is accepted by the wrapper as an alias.
+Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. The direct GitClaw commands only work with a real Gemini API key (`GEMINI_API_KEY`). If you previously exported `GOOGLE_API_KEY`, unset it in that shell so GitClaw does not prefer the old alias.
 
 ```
 → Hey! Congratulations! You won ₹5,00,000!...

@@ -143,14 +143,14 @@ npx gitagent validate
 # 3. View agent summary
 npx gitagent info
 
-# 4. Run GitClaw with a Gemini key (GitClaw checks GOOGLE_API_KEY, so this helper maps it for you)
-npm run gitclaw:gemini
+# 4. Run GitClaw with a Grok/xAI key (the helper maps `XAI_API_KEY` for the CLI)
+npm run gitclaw:xai
 
 # Or start the interactive REPL
 npx gitclaw
 ```
 
-Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. For this GitClaw path, set `GEMINI_API_KEY` and use the helper so it exports `GOOGLE_API_KEY` for the CLI.
+Then type one message per line at the prompt. Use `/quit` to exit and `/memory` to view saved memory. For this GitClaw path, set `XAI_API_KEY` (or `GROK_API_KEY`) and use the helper so it exports `XAI_API_KEY` for the CLI.
 
 ```
 → Hey! Congratulations! You won ₹5,00,000!...

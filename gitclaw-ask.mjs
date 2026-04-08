@@ -9,17 +9,19 @@ if (!prompt) {
   process.exit(1);
 }
 
-const model = 'google:gemini-2.0-flash';
+const model = 'xai:grok-4';
 
-const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+const xaiApiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
 
-if (!geminiApiKey) {
-  console.error('Error: GEMINI_API_KEY environment variable is not set.');
-  console.error('Set it with: export GEMINI_API_KEY=your-key-here');
+if (!xaiApiKey) {
+  console.error('Error: XAI_API_KEY environment variable is not set.');
+  console.error('Set it with: export XAI_API_KEY=your-key-here');
   process.exit(1);
 }
 
-process.env.GEMINI_API_KEY = geminiApiKey;
+process.env.XAI_API_KEY = xaiApiKey;
+delete process.env.GROK_API_KEY;
+delete process.env.GEMINI_API_KEY;
 delete process.env.GOOGLE_API_KEY;
 
 try {

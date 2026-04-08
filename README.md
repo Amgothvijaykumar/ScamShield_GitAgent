@@ -1,424 +1,446 @@
-# ScamShield - GitAgent Challenge Submission
+# ScamShield — AI Scam Detector Agent
 
-**Detect scams in SMS, emails, and links with an AI agent built on gitagent standard.**
-
-🏆 **GitAgent Open Innovation Hackathon 2025**  
-📍 **Branch:** gitclaw-testing  
-✅ **Status:** Submission Ready
+**Hackathon:** GitAgent Open Innovation Hackathon  
+**Submission Date:** 10th April 2026  
+**Standard:** gitagent v0.1.0  
+**Runtime:** gitclaw + clawless (serverless)  
+**License:** MIT  
+**Author:** Solo Participant
 
 ---
 
-## 🚀 Quick Start (Choose Your Method)
+## 🚀 Quick Start (30 seconds)
 
-### Option 1: Offline Demo (30 seconds, NO API KEY NEEDED)
 ```bash
-git clone https://github.com/Amgothvijaykumar/ScamShield_GitAgent.git
-cd ScamShield_GitAgent
+# 1. Install dependencies
 npm install
-npm run cli:demo
-```
-**Result:** See 4 test cases analyzed instantly (UPI scam, KYC phishing, job fraud, legitimate).
 
-### Option 2: Interactive Mode (Type Your Own Messages)
-```bash
-npm run cli:interactive
-# Paste any suspicious message → Get instant verdict
+# 2. Start the web server
+npm start
+
+# 3. Open browser
+# http://localhost:3000
+
+# ✅ Done! Start analyzing messages!
 ```
 
-### Option 3: Full gitclaw Agent (With Anthropic API Key)
+**Want detailed setup instructions?** → Read [SETUP.md](./SETUP.md)
+
+---
+
+## 🎯 What is ScamShield?
+
+ScamShield is an AI agent that analyzes suspicious SMS messages, emails, links, and text content to detect scams in real-time. Paste any message you're unsure about, and ScamShield will tell you:
+
+- **Is it safe or dangerous?** (Risk score: 0–100%)
+- **What type of scam is it?** (phishing, lottery, job fraud, etc.)
+- **What are the red flags?** (specific evidence from your message)
+- **What should you do right now?** (step-by-step actions)
+
+ScamShield is purpose-built for India, where UPI fraud, fake KYC alerts, lottery scams, and job scams are rampant. It speaks plain English, respects user privacy, and never blames victims — only protects them.
+
+---
+
+## ✨ Features
+
+- **Instant Analysis**: Paste any suspicious content → Get verdict in seconds
+- **Plain Language**: No jargon. Explains like a trusted friend, not a security researcher
+- **India-Focused**: Understands UPI, NPCI, Aadhaar, TRAI, and Indian banks
+- **Privacy First**: Stateless analysis — your content is never logged or stored
+- **Structured Verdicts**: Risk score, scam type, red flags, and actionable guidance
+- **Four-Stage Pipeline**: Parse → Detect → Classify → Explain (transparent reasoning)
+- **Serverless Ready**: Runs locally with gitclaw, or deploy zero-infrastructure with clawless
+
+---
+
+## 🏗️ Architecture
+
+ScamShield follows the **gitagent standard** and implements a four-stage detection pipeline:
+
+```
+User Input
+    ↓
+┌─ STAGE 1: parse-input ──────────────────────────────────────┐
+│ Normalize input into structured JSON: extract sender, URLs,  │
+│ phone numbers, keywords, language detection                  │
+└─────────────────────────────────────────────────────────────┘
+    ↓
+┌─ STAGE 2: analyze-signals ──────────────────────────────────┐
+│ Check against 6 weighted signal categories:                  │
+│ • Urgency language       • Prize/lottery claims              │
+│ • Government impersonation • Suspicious URLs                 │
+│ • Credential requests    • Upfront fee demands               │
+│ Output: signal score (0.0–1.0) with evidence                │
+└─────────────────────────────────────────────────────────────┘
+    ↓
+┌─ STAGE 3: classify-threat ──────────────────────────────────┐
+│ Aggregate signals → Risk score (0–100%)                      │
+│ Classify risk level: SAFE / LOW / MEDIUM / HIGH              │
+│ Identify scam type: phishing, lottery, job fraud, etc.       │
+│ Output: structured JSON classification                       │
+└─────────────────────────────────────────────────────────────┘
+    ↓
+┌─ STAGE 4: explain-verdict ──────────────────────────────────┐
+│ Format as user-facing verdict: risk level, red flags,        │
+│ what to do, reporting channels, best practices               │
+│ Output: Plain-language HTML/markdown verdict                 │
+└─────────────────────────────────────────────────────────────┘
+    ↓
+User Receives Clear Verdict
+```
+
+**Skills (4 total):**
+- [parse-input](skills/parse-input/SKILL.md) — Normalize raw content
+- [analyze-signals](skills/analyze-signals/SKILL.md) — Detect scam indicators
+- [classify-threat](skills/classify-threat/SKILL.md) — Score and categorize
+- [explain-verdict](skills/explain-verdict/SKILL.md) — Generate user guidance
+
+**Tools (1 total):**
+- [url-extractor](tools/url-extractor.yaml) — Extract and validate URLs
+
+**Examples (4 test cases):**
+- [upi-lottery.txt](examples/upi-lottery.txt) — HIGH-RISK lottery scam
+- [fake-kyc.txt](examples/fake-kyc.txt) — HIGH-RISK phishing (KYC)
+- [job-scam.txt](examples/job-scam.txt) — MEDIUM/HIGH-RISK job fraud
+- [legitimate.txt](examples/legitimate.txt) — SAFE legitimate message
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js v18 or higher
+- npm or yarn
+- Git
+
+### Installation
+
 ```bash
-export ANTHROPIC_API_KEY=your_key_here
+# 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/scamshield-agent.git
+cd scamshield-agent
+
+# 2. Install dependencies
+npm install
+
+# 3. Install gitagent CLI (global)
+npm install -g gitagent
+
+# 4. Verify installation
+npx gitagent --help
+```
+
+### Option A: Run Locally with gitclaw
+
+```bash
+# 1. Install gitclaw SDK
+npm install gitclaw
+
+# 2. Validate agent structure
+npx gitagent validate
+
+# 3. View agent summary
+npx gitagent info
+
+# 4. Start interactive analysis (with gitclaw runtime)
 npx gitclaw start --agent . --interactive
 ```
-**Note:** With gitclaw + API key, the agent gains **conversation memory** — it remembers previous messages, can reference earlier scams analyzed, and provides better contextual understanding. Memory is automatically managed by gitclaw. ✅
+
+Then paste any suspicious message at the prompt:
+
+```
+ScamShield > paste your suspicious message or hit Enter to use examples:
+> Hey! Congratulations! You won ₹5,00,000!...
+```
+
+### Option B: Deploy Serverlessly with clawless
+
+For zero-infrastructure deployment (browser-based):
+
+```bash
+# 1. Install clawless
+npm install clawless
+
+# 2. Build for webcontainer
+npx clawless build --agent . --output dist/
+
+# 3. Deploy to your hosting (Vercel, Netlify, GitHub Pages, etc.)
+# Or run locally:
+npx clawless serve --port 3000
+```
+
+Visit `http://localhost:3000` and analyze messages in your browser.
 
 ---
 
-## 📊 What You're Testing
+## 📋 Usage Examples
 
-**Agent Name:** scamshield-agent v1.0.0  
-**Purpose:** Analyze SMS, emails, and text for scams with risk score and actionable guidance.
+### Example 1: Suspicious UPI Lottery SMS
 
-### Example Output
+**Input:**
 ```
-Input:
-"Congratulations! You won ₹5,00,000! Click: http://npci-reward.xyz. Expires in 2 hours!"
+Congratulations! You have been selected as the lucky winner of ₹5,00,000 
+in our NPCI National Prize Draw. 
 
-Output:
+Click here to claim: http://npci-reward-claim.xyz
+
+Your claim expires in 2 hours. Do not delay!
+
+— NPCI Official Team  
+Contact: 9876543210
+```
+
+**Output:**
+```
 🚨 LIKELY SCAM — Do not engage.
 
 RISK LEVEL: HIGH
-RISK SCORE: 100%
-SCAM TYPE: phishing
+RISK SCORE: 89%
+SCAM TYPE: Lottery Scam
 
 RED FLAGS FOUND:
-• Artificial urgency/fear creates pressure
-• Fake prize/reward/lottery claim
-• Suspicious domain or URL pattern
+• Prize claim never entered: Message claims you won ₹5,00,000 but you never participated
+• Artificial urgency: "Expires in 2 hours" creates pressure to bypass caution
+• Suspicious domain: URL is "npci-reward-claim.xyz" (not official npci.org.in)
+• Impersonation: "NPCI Official Team" is spoofed; NPCI never sends prize claims
+• Suspicious sender: Phone number 9876543210 is not official NPCI contact
 
 WHAT TO DO:
-✗ Do not click links, call numbers, or share info
-✓ Block and delete immediately
-✓ Report to cybercrime.gov.in and call 1930
+✗ Do not click any links in this message
+✗ Do not enter your OTP or bank details
+✗ Do not call the phone number provided
+
+✓ Block this sender immediately
+✓ Delete the message
+✓ Report to cybercrime.gov.in and National Cybercrime Helpline 1930
+✓ Do not engage further with the sender
+
+CONFIDENCE IN THIS VERDICT: high
+```
+
+### Example 2: Legitimate Amazon Order Notification
+
+**Input:**
+```
+Hi Rajesh,
+
+Your Amazon order #123-4567890-8901234 (OnePlus 11 5G) has been shipped.
+
+Track your order: https://amazon.in/track/123-4567890-8901234
+
+Expected delivery: 7 April 2026
+Seller: Amazon.in Fulfillment
+```
+
+**Output:**
+```
+✅ This message appears safe.
+
+RISK LEVEL: SAFE
+RISK SCORE: 5%
+SCAM TYPE: No scam detected
+
+RED FLAGS FOUND:
+No significant scam signals found — this appears to be legitimate communication.
+
+WHAT TO DO:
+✓ You can safely interact with this message and click the tracking link
+✓ Always verify by visiting amazon.in directly if you're unsure
 
 CONFIDENCE IN THIS VERDICT: high
 ```
 
 ---
 
-## 🎯 Judging Criteria Alignment
+## ✅ Validation & Testing
 
-| Criterion | Weight | Evidence |
-|-----------|--------|----------|
-| **Agent Quality** | 30% | ✅ SOUL.md (clear identity) + RULES.md (constraints) + proper manifest |
-| **Skill Design** | 25% | ✅ 4 focused skills: parse-input → analyze-signals → classify-threat → explain-verdict |
-| **Working Demo** | 25% | ✅ Runs offline + gitclaw ready + 100% detection on test suite |
-| **Creativity** | 20% | ✅ India-specific patterns + weighted signals + consumer focus |
+### Validate Agent Structure
 
-**Full proof:** Run `npm run cli:demo` — you'll see all 4 test cases pass with HIGH-RISK detection.
-
----
-
-## 📁 Repository Structure
-
-```
-ScamShield/
-├── agent.yaml              # Gitagent manifest (required)
-├── SOUL.md                 # Agent identity (required)
-├── RULES.md                # Constraints (required)
-├── skills/                 # 4-stage pipeline (required)
-│   ├── parse-input/        # Stage 1: Normalize input
-│   ├── analyze-signals/    # Stage 2: Detect patterns
-│   ├── classify-threat/    # Stage 3: Score & classify
-│   └── explain-verdict/    # Stage 4: User output
-├── tools/                  # Tool definitions (required)
-│   └── url-extractor.yaml
-├── scamshield-core.js      # Core implementation
-├── server.js               # Express wrapper (optional)
-├── examples/               # Test cases
-│   ├── upi-lottery.txt     # HIGH-RISK: ✅ 100% detection
-│   ├── fake-kyc.txt        # HIGH-RISK: ✅ 100% detection
-│   ├── job-scam.txt        # HIGH-RISK: ✅ 100% detection
-│   └── legitimate.txt      # SAFE: Appropriately cautious
-├── package.json            # Dependencies
-├── README.md               # This file
-└── LICENSE                 # MIT
-```
-
----
-
-## ✅ Validation Proof
-
-### Gitagent CLI Validation
 ```bash
-$ npx gitagent validate
-✓ agent.yaml — valid
-✓ SOUL.md — valid
-✓ tools/ — valid
-✓ skills/ — valid (4 skills)
-✓ Validation passed (0 warnings)
-```
-
-### Core Detection Testing
-```bash
-$ npm run cli:demo
-
-Test 1: UPI Lottery Scam
-✓ Detected: HIGH RISK (100%)
-
-Test 2: Fake KYC Phishing  
-✓ Detected: HIGH RISK (100%)
-
-Test 3: Job Fraud
-✓ Detected: HIGH RISK (100%)
-
-Test 4: Legitimate Message
-✓ Analyzed: Appropriately cautious
-
-✅ All tests passing
-```
-
----
-
-## 🛡️ How It Works (4-Stage Pipeline)
-
-### Stage 1: Parse Input
-Normalizes any input (SMS, email, mixed text) into structured JSON:
-- Detect content type
-- Extract URLs, phone numbers, sender info
-- Identify keywords
-
-### Stage 2: Analyze Signals
-Detects scam indicators with weighted scoring:
-- Urgency language ("expires in", "act now")
-- Prize/lottery claims ("you won", "congratulations")
-- Impersonation ("from your bank", "official")
-- Credential requests (OTP, Aadhaar, CVV)
-- Upfront payment demands
-
-Each signal has a weight (0.0–1.0). Output: confidence score 0.0–1.0
-
-### Stage 3: Classify Threat
-Maps aggregated signals to final verdict:
-- Risk score: 0–100%
-- Risk level: SAFE / LOW / MEDIUM / HIGH
-- Scam type: Phishing, Lottery, Impersonation, etc.
-
-### Stage 4: Explain Verdict
-Generates plain-language output:
-- Clear verdict (safe or dangerous)
-- Red flags with evidence
-- Actionable "What To Do" section
-- Official reporting channels (cybercrime.gov.in, 1930)
-- Consumer education
-
----
-
-## 🌍 India-Specific Detection
-
-This agent is trained to detect:
-
-**UPI Fraud**
-- Fake payment links
-- Screen-share scams
-- Prize claims
-
-**Bank Impersonation**
-- Fake SBI, HDFC, ICICI alerts
-- Fake KYC verification
-- Account blocking threats
-
-**Government Impersonation**
-- Fake TRAI, Income Tax, CBI notices
-- Fake NPCI alerts
-- Fake RBI communications
-
-**Job Scams**
-- Fake work-from-home offers
-- Registration fee demands
-- Fake MNC recruitment
-
-**Lottery & Prize Scams**
-- Unclaimed prizes
-- Fake government draws
-- Fake corporate rewards
-
-**Delivery Scams**
-- Fake India Post, Delhivery alerts
-- Package verification fraud
-
-**Investment Scams**
-- Fake crypto doubling schemes
-- Stock tip scams
-- Fake trading platforms
-
----
-
-## 📋 Agent Identity & Rules
-
-### SOUL.md (Who is ScamShield?)
-- **I am:** A protective AI agent specializing in scam detection
-- **I believe in:** Protection over politeness, honesty about uncertainty, no shame for victims
-- **I communicate:** Like a trusted friend, plain language, direct findings
-- **I specialize in:** India's digital fraud landscape (UPI, PAN, Aadhaar, job scams, etc.)
-
-### RULES.md (What must/must never do?)
-**Must Always:**
-- ✅ Provide risk score (0–100%) in every verdict
-- ✅ List specific red flags with evidence from input
-- ✅ Include "WHAT TO DO" section
-- ✅ Reference official reporting channels (cybercrime.gov.in, 1930)
-- ✅ Use probabilistic language ("likely", "appears to be")
-
-**Must Never:**
-- ❌ Claim 100% certainty
-- ❌ Shame or blame victims
-- ❌ Hallucinate evidence
-- ❌ Store/log user content
-- ❌ Recommend third-party products
-
----
-
-## 🧪 Test It Right Now
-
-### Quick Test (Copy-Paste)
-```bash
-npm run cli:interactive
-```
-Then paste this message:
-```
-Dear Customer,
-Your SBI account has been blocked. 
-Verify immediately: http://sbi-verify-urgent.xyz
-Call: 9876543210
-```
-
-**Expected Output:** 🚨 HIGH RISK (100%) — LIKELY SCAM
-
----
-
-## 🔧 Deployment Targets
-
-This agent runs on:
-- ✅ **gitclaw** (agent framework)
-- ✅ **clawless** (serverless browser)
-- ✅ **Claude API** (direct integration)
-- ✅ **claude.dev** (web interface)
-- ✅ **Cursor** (IDE integration)
-- ✅ **Node.js CLI** (standalone)
-- ✅ **Express Server** (HTTP API)
-
----
-
-## 📖 Learn More
-
-**Core Files to Review:**
-- `SOUL.md` — Detailed agent identity and values
-- `RULES.md` — Complete behavioral constraints
-- `skills/` — Each stage of the detection pipeline
-- `examples/` — Real scam examples
-- `memory/MEMORY.md` — Example agent analyses with full reasoning
-
-**Try These Commands:**
-```bash
-# Show agent info
-npx gitagent info
-
-# Validate structure
 npx gitagent validate
-
-# Export as system prompt (for Claude API)
-npx gitagent export -f system-prompt
-
-# Export for claude.dev
-npx gitagent export -f claude-code
-
-# Export for Cursor IDE
-npx gitagent export -f cursor
 ```
 
----
-
-## 🎬 Example Test Cases
-
-### Test 1: UPI Lottery Scam ✅
+Expected output:
 ```
-Input:
-Congratulations! You have been selected as the lucky winner of ₹5,00,000 
-in our NPCI National Prize Draw. Click here to claim: http://npci-reward-claim.xyz
-Your claim expires in 2 hours. Do not delay!
+✓ agent.yaml: valid
+✓ SOUL.md: found (200+ words)
+✓ RULES.md: found (20+ rules)
+✓ skills/parse-input: valid
+✓ skills/analyze-signals: valid
+✓ skills/classify-threat: valid
+✓ skills/explain-verdict: valid
+✓ tools/url-extractor: valid
+✓ examples: 4 test cases found
 
-Output:
-🚨 LIKELY SCAM — Do not engage.
-RISK LEVEL: HIGH
-RISK SCORE: 100%
-RED FLAGS: Urgency + Prize claim + Suspicious domain
+All validations passed!
 ```
 
-### Test 2: Fake KYC Phishing ✅
-```
-Input:
-Dear SBI Customer, Your account will be blocked in 24 hours 
-unless you verify KYC. Click: https://sbi-kyc-verify.xyz
-Enter: OTP, Account Number, Aadhaar, CVV
-
-Output:
-🚨 LIKELY SCAM — Do not engage.
-RISK LEVEL: HIGH
-RISK SCORE: 100%
-RED FLAGS: Bank impersonation + Urgency + Credentials request
-```
-
-### Test 3: Legitimate Message ✅
-```
-Input:
-Hi Mr. Kumar, This is your monthly bill statement from Jio.
-Amount: ₹599. Due date: 15th April. View: www.jio.com/bill
-
-Output:
-✓ APPEARS SAFE
-RISK LEVEL: SAFE
-RISK SCORE: 2%
-CONFIDENCE: low (standard commercial message)
-```
-
----
-
-## ⚡ Quick Commands Reference
+### View Agent Summary
 
 ```bash
-# Installation
-npm install
-npm install gitclaw  # optional, for full agent
+npx gitagent info
+```
 
-# Testing
-npm run cli:demo                    # See all tests
-npm run cli:interactive             # Your own input
-npm start                           # Start server
+### Run Tests with Examples
 
-# Validation
-npx gitagent validate               # Check structure
-npx gitagent info                   # Show metadata
-
-# Deployment
-npm run cli:demo                    # Offline (no API key)
-export ANTHROPIC_API_KEY=...
-npx gitclaw start --agent . --interactive  # With API key
+```bash
+# Test with all 4 example files
+for file in examples/*.txt; do
+  echo "=== Testing $file ==="
+  npx gitclaw analyze --agent . --input "$file"
+done
 ```
 
 ---
 
-## 🎓 Understanding the Agent
+## 🔧 Customization & Extension
 
-**Why this approach works:**
-- ✅ **No external API dependency** — Core detection is pure logic
-- ✅ **India-focused** — Understands local fraud patterns
-- ✅ **Consumer-first** — Empathetic, actionable guidance
-- ✅ **Transparent** — Every conclusion cites evidence
-- ✅ **Modular** — 4 skills can work independently
+### Add a New Skill
 
-**Key innovation:**
-Weighted signal aggregation instead of simple rules → Sophisticated threat classification
+1. Create directory: `skills/my-skill/SKILL.md`
+2. Write YAML frontmatter + Markdown instructions (see existing skills as template)
+3. Add skill name to `agent.yaml` under `skills:`
+4. Run `npx gitagent validate` to verify
+
+### Add a New Tool
+
+1. Create YAML file: `tools/my-tool.yaml`
+2. Define tool schema and implementation
+3. Reference in skills using `allowed-tools:`
+4. Test with `npx gitagent validate`
+
+### Modify Agent Identity
+
+Edit [SOUL.md](SOUL.md) to change:
+- Agent personality and communication style
+- Domain expertise focus
+- Values and principles
+
+Edit [RULES.md](RULES.md) to change:
+- Must Always / Must Never constraints
+- Output format requirements
+- Safety and ethics boundaries
 
 ---
 
-## 📞 Support
+## 📊 Judging Criteria Coverage
 
-**For judges:**
-- Clone the repo
-- Run `npm install`
-- Try `npm run cli:demo` (works offline)
-- Read SOUL.md and RULES.md for agent details
+This submission addresses all four hackathon judging criteria:
 
-**For documentation:**
-- SOUL.md — Agent identity
-- RULES.md — Behavioral constraints
-- skills/ — How each stage works
-- examples/ — Test cases
+### 1. **Agent Quality** (30%)
+- **SOUL.md**: Distinctive personality, India-focused expertise, protective values
+- **RULES.md**: 20+ hard constraints, no hallucinations, privacy-first
+- **Chain of Reasoning**: Transparent four-stage pipeline with auditable decision logic
+- **Scope Focus**: Strictly scam detection — not a general-purpose assistant
+
+### 2. **Skill Design** (25%)
+- **Four Focused Skills**: Each skill has one clear responsibility (parse → analyze → classify → explain)
+- **Well-Documented**: Detailed SKILL.md for each with examples and edge cases
+- **Practical**: Each skill produces JSON output that feeds into the next (clean handoff)
+- **Taxonomy-Based**: analyze-signals uses a scientific signal catalog with weighted evidence
+
+### 3. **Working Demo** (25%)
+- **Local Setup**: Works out-of-box with gitclaw (`npm install && npx gitclaw start`)
+- **Example Cases**: 4 test files covering HIGH/MEDIUM/SAFE verdicts
+- **Real Content**: Examples use actual scam SMS patterns observed in India
+- **Reproducible**: Same input → same verdict every run
+
+### 4. **Creativity** (20%)
+- **India Focus**: Designed specifically for Indian fraud landscape (UPI, NPCI, KYC, TRAI)
+- **User Empathy**: Protective tone that never blames victims, even if they clicked
+- **Plain Language**: Explains "phishing" and "OTP" to non-technical users
+- **Serverless Option**: Provides both local (gitclaw) and zero-infrastructure (clawless) deployment paths
+
+---
+
+## 🔐 Safety & Privacy Principles
+
+- **Private by Default**: Each analysis is stateless — no content logging, no session storage
+- **Evidence-Based**: Every red flag must be quoted directly from user input (no hallucinations)
+- **No Shame**: Scam victims are victims, never blamed for being targeted
+- **Probabilistic Language**: Uses "likely" and "appears to be" — never 100% certainty
+- **Official Channels Only**: Only recommends cybercrime.gov.in and National Cybercrime Helpline 1930, never third-party apps
+- **Transparent Reasoning**: User sees exactly which red flags triggered the verdict
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|---|---|
+| **Agent Standard** | gitagent v0.1.0 |
+| **Runtime (Local)** | gitclaw SDK (Node.js) |
+| **Runtime (Serverless)** | clawless (WebContainers) |
+| **Primary LLM** | Claude Sonnet 4.5 |
+| **Fallback LLMs** | GPT-4o, Gemini 1.5 Pro |
+| **Language** | Markdown (skills) + YAML (agent, tools) |
+| **Hosting** | GitHub (source), Vercel/Netlify (clawless) |
+
+---
+
+## 📱 Demo Video
+
+See [DEMO.md](DEMO.md) for step-by-step demo setup and recording instructions (2–5 min video).
+
+---
+
+## 🤝 Contributing
+
+This is a solo hackathon submission. Community contributions welcome post-hackathon:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-improvement`
+3. Make changes and validate: `npx gitagent validate`
+4. Submit a pull request with description
+
+---
+
+## 📞 Support & Reporting
+
+**Scam Indicators (Real Scams):**
+- Report to cybercrime.gov.in (online portal)
+- Call National Cybercrime Helpline: **1930** (24/7, free)
+- WhatsApp: +91-73-1111-1111 (CyberDost by Delhi Police)
+
+**Agent Issues / Feedback:**
+- GitHub Issues: [Open an issue](https://github.com/YOUR_USERNAME/scamshield-agent/issues)
+- Discussions: [Start a discussion](https://github.com/YOUR_USERNAME/scamshield-agent/discussions)
 
 ---
 
 ## 📄 License
 
-MIT
+MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🚀 Ready to Test?
+## 🏆 Hackathon Links
 
-**Start here:**
-```bash
-npm run cli:demo
-```
-
-**Then explore:**
-```bash
-npm run cli:interactive
-```
-
-**Questions?**  
-Check SOUL.md for what the agent believes, RULES.md for how it behaves, and skills/ to see how it works.
+- **Hackathon:** [GitAgent Open Innovation Hackathon](https://github.com/open-gitagent/gitagent)
+- **Hackathon Discord:** [gitAgent Discord](https://discord.gg/gitagent)
+- **gitagent Standard:** https://github.com/open-gitagent/gitagent
+- **gitclaw SDK:** https://github.com/open-gitagent/gitclaw
+- **clawless Runtime:** https://github.com/open-gitagent/clawless
 
 ---
 
-**Built with ❤️ for consumer protection in India**
+## 📝 Submission Checklist
+
+- [x] Problem statement addressed (PRD.md)
+- [x] gitagent-compliant repo structure
+- [x] agent.yaml with all 4 skills + tools
+- [x] SOUL.md (200+ words, distinctive personality)
+- [x] RULES.md (20+ constraints, safety-focused)
+- [x] 4 skills with detailed SKILL.md docs
+- [x] 1 tool (URL extractor) with YAML schema
+- [x] 4 example test cases
+- [x] README.md with local setup & demo instructions
+- [x] Works with gitclaw (local) and clawless (serverless)
+- [ ] Demo video (2–5 min) — to be recorded & uploaded
+- [ ] Public GitHub repo — to be initialized & pushed
+
+---
+
+**Last Updated:** 7 April 2026  
+**Status:** Ready for hackathon submission (pending GitHub push & demo video)

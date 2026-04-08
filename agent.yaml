@@ -6,10 +6,10 @@ author: "Amgoth Vijay Kumar"
 license: MIT
 
 model:
-  preferred: anthropic:claude-sonnet-4-5-20250929
+  preferred: google:gemini-2.0-flash
   fallback:
+    - anthropic:claude-sonnet-4-5-20250929
     - openai:gpt-4o
-    - google:gemini-1.5-pro
   constraints:
     temperature: 0.1
     max_tokens: 4096

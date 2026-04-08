@@ -8,6 +8,7 @@
     "cli": "node scamshield-core.js",
     "cli:interactive": "node scamshield-core.js -i",
     "cli:demo": "node scamshield-core.js",
+    "gitclaw:ask": "node gitclaw-ask.mjs",
     "test": "node scamshield-core.js"
   },
   "dependencies": {

@@ -417,7 +417,11 @@ function classifyThreat(signalAnalysis) {
   if (signalAnalysis.signal_count >= 3) confidence = "high";
   else if (signalAnalysis.signal_count >= 2) confidence = "medium";
 
-  const riskScore = Math.round(score * 100);
+  // Calculate risk score and constrain to [1, 99] range
+  // Never output 0% or 100% - AI can never be absolutely certain
+  let riskScore = Math.round(score * 100);
+  if (riskScore === 0) riskScore = 1;      // Minimum: very likely safe, but not 100% certain
+  if (riskScore === 100) riskScore = 99;   // Maximum: very likely scam, but not 100% certain
 
   return {
     risk_score: riskScore,
